@@ -55,12 +55,6 @@
             <artifactId>hadoop-core</artifactId>
             <version>[1.0, 2.0)</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.apache.hbase</groupId>-->
-            <!--<artifactId>hbase</artifactId>-->
-            <!--<version>0.99.0</version>-->
-        <!--</dependency>-->
-
 
         <dependency>
             <groupId>org.apache.hbase</groupId>
@@ -68,22 +62,9 @@
             <version>0.96.1.1-cdh5.0.3</version>
         </dependency>
 
-        <!--<dependency>-->
-        <!--<groupId>org.apache.hbase</groupId>-->
-        <!--<artifactId>hbase-hadoop-compat</artifactId>-->
-        <!--<version>0.96.1.1-cdh5.0.3</version>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-protocol</artifactId>
-            <version>0.96.1.1-cdh5.0.3</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.apache.hbase</groupId>
-            <artifactId>hbase-hadoop2-compat</artifactId>
             <version>0.96.1.1-cdh5.0.3</version>
         </dependency>
 
@@ -103,11 +84,6 @@
             <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
         </repository>
 
-        <!--<repository>-->
-            <!--<id>DataNucleus_Repos2</id>-->
-            <!--<name>DataNucleus Repository</name>-->
-            <!--<url>http://www.datanucleus.org/downloads/maven2-nightly/org/datanucleus/</url>-->
-        <!--</repository>-->
     </repositories>
 
 
