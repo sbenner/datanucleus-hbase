@@ -17,6 +17,7 @@ Contributors :
 ***********************************************************************/
 package org.datanucleus.store.hbase;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.apache.hadoop.conf.Configuration;
@@ -122,6 +123,10 @@ public class ConnectionFactoryImpl extends AbstractConnectionFactory
             catch (ZooKeeperConnectionException e)
             {
                 throw new NucleusDataStoreException("Exception thrown obtaining HConnection", e);
+            }
+            catch (IOException e){
+                throw new NucleusDataStoreException("Exception thrown obtaining HConnection", e);
+
             }
         }
         return managedConnection;

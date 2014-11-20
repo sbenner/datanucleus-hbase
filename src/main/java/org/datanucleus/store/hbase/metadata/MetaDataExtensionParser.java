@@ -19,8 +19,8 @@ package org.datanucleus.store.hbase.metadata;
 
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
-import org.apache.hadoop.hbase.io.hfile.Compression;
-import org.apache.hadoop.hbase.regionserver.StoreFile;
+import org.apache.hadoop.hbase.io.compress.Compression;
+import org.apache.hadoop.hbase.regionserver.BloomType;
 import org.datanucleus.metadata.AbstractClassMetaData;
 import org.datanucleus.metadata.ExtensionMetaData;
 import org.datanucleus.util.NucleusLogger;
@@ -35,7 +35,7 @@ public class MetaDataExtensionParser
 {
     public final static String BASE = "hbase.columnFamily.";
 
-    private Map<String, StoreFile.BloomType> bloomFilterPerCf = new HashMap<String, StoreFile.BloomType>();
+    private Map<String, BloomType> bloomFilterPerCf = new HashMap<String, BloomType>();
     private Map<String, Boolean> inMemoryPerCf = new HashMap<String, Boolean>();
     private Map<String, Boolean> keepDeletedCellsPerCf = new HashMap<String, Boolean>();
     private Map<String, Boolean> blockCacheEnabledPerCf = new HashMap<String, Boolean>();
@@ -138,7 +138,7 @@ public class MetaDataExtensionParser
         if(hColumnDescriptor == null) {
             throw new IllegalArgumentException("No such family name corresponding HTable: " + familyName);
         }
-        StoreFile.BloomType configuredBloomFilter = getBloomFilterForCf(familyName);
+        BloomType configuredBloomFilter = getBloomFilterForCf(familyName);
         if (configuredBloomFilter != hColumnDescriptor.getBloomFilterType())
         {
             hColumnDescriptor.setBloomFilterType(configuredBloomFilter);
@@ -183,25 +183,25 @@ public class MetaDataExtensionParser
         return modified;
     }
 
-    private StoreFile.BloomType getBloomFilterForCf(String familyName)
+    private BloomType getBloomFilterForCf(String familyName)
     {
-        StoreFile.BloomType result = bloomFilterPerCf.get(familyName);
-        return result != null ? result : StoreFile.BloomType.NONE;
+        BloomType result = bloomFilterPerCf.get(familyName);
+        return result != null ? result : BloomType.NONE;
     }
 
-    private StoreFile.BloomType toBloomFilter(String value)
+    private BloomType toBloomFilter(String value)
     {
         if (value == null || value.length() == 0)
         {
-            return StoreFile.BloomType.NONE;
+            return BloomType.NONE;
         }
         try
         {
-            return StoreFile.BloomType.valueOf(value);
+            return BloomType.valueOf(value);
         }
         catch (IllegalArgumentException e)
         {
-            return StoreFile.BloomType.NONE;
+            return BloomType.NONE;
         }
     }
 
