@@ -103,6 +103,7 @@ public class HBaseStoreManager extends AbstractStoreManager implements SchemaAwa
     public synchronized void close()
     {
         nucleusContext.getMetaDataManager().deregisterListener(metadataListener);
+
         super.close();
     }
 

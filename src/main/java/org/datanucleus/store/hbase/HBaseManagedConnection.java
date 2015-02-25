@@ -88,6 +88,7 @@ public class HBaseManagedConnection extends AbstractManagedConnection
         {
             listener.managedConnectionPreClose();
         }
+        listeners.clear();
 
         try
         {
@@ -114,7 +115,9 @@ public class HBaseManagedConnection extends AbstractManagedConnection
             for (ManagedConnectionResourceListener listener : listeners)
             {
                 listener.managedConnectionPostClose();
+
             }
+            listeners.clear();
         }
     }
 

@@ -99,6 +99,7 @@ public class ConnectionFactoryImpl extends AbstractConnectionFactory
 
         int maxSize = storeMgr.getIntProperty("datanucleus.hbase.tablePoolMaxSize");
         maxSize = maxSize > 0 ? maxSize : Integer.MAX_VALUE;
+
     }
 
     /**
