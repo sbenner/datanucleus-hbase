@@ -47,7 +47,7 @@
         <dependency>
             <groupId>org.datanucleus</groupId>
             <artifactId>datanucleus-core</artifactId>
-            <version>[${dn.core.version}, )</version>
+            <version>4.0.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

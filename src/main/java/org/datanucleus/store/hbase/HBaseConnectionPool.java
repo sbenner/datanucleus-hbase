@@ -29,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class HBaseConnectionPool
 {
-    private final List<HBaseManagedConnection> connections;
+    private static  List<HBaseManagedConnection> connections;
 
     private final ThreadLocal<WeakReference<HBaseManagedConnection>> connectionForCurrentThread;
 
@@ -41,7 +41,7 @@ public class HBaseConnectionPool
     {
         connectionForCurrentThread = new ThreadLocal<WeakReference<HBaseManagedConnection>>();
 
-        connections = new CopyOnWriteArrayList<HBaseManagedConnection>();
+        //connections = new CopyOnWriteArrayList<HBaseManagedConnection>();
 
         evictorThread = new Timer("HBase Connection Evictor", true);
         startConnectionEvictorThread(evictorThread);
@@ -49,7 +49,7 @@ public class HBaseConnectionPool
 
     public void registerConnection(HBaseManagedConnection managedConnection)
     {
-        connections.add(managedConnection);
+        //connections.add(managedConnection);
         connectionForCurrentThread.set(new WeakReference<HBaseManagedConnection>(managedConnection));
     }
 
@@ -78,21 +78,31 @@ public class HBaseConnectionPool
 
     private void disposeTimedOutConnections()
     {
-        List<HBaseManagedConnection> timedOutConnections = new ArrayList<HBaseManagedConnection>();
+        //List<HBaseManagedConnection> timedOutConnections = new ArrayList<HBaseManagedConnection>();
+         WeakReference<HBaseManagedConnection> reference =  connectionForCurrentThread.get();
 
-        for (HBaseManagedConnection managedConnection : connections)
-        {
-            if (managedConnection.isExpired())
-            {
-                timedOutConnections.add(managedConnection);
-            }
-        }
 
-        for (HBaseManagedConnection managedConnection : timedOutConnections)
-        {
-            managedConnection.dispose();
-            connections.remove(managedConnection);
-        }
+         if(reference!=null&&reference.get()!=null){
+             HBaseManagedConnection con = (HBaseManagedConnection)reference.get();
+
+             if(con!=null&&con.isExpired()){
+                 con.dispose();
+             }
+         }
+
+
+
+
+//        for (HBaseManagedConnection managedConnection : connections)
+//        {
+//            if (managedConnection.isExpired())
+//            {
+//                managedConnection.dispose();
+//                connections.remove(managedConnection);
+//            }
+//        }
+
+
     }
 
     private void startConnectionEvictorThread(Timer connectionTimeoutThread)

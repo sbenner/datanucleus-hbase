@@ -24,6 +24,7 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.ZooKeeperConnectionException;
 import org.apache.hadoop.hbase.client.HConnection;
 import org.apache.hadoop.hbase.client.HConnectionManager;
+import org.apache.hadoop.hbase.client.HTablePool;
 import org.datanucleus.ExecutionContext;
 import org.datanucleus.exceptions.NucleusDataStoreException;
 import org.datanucleus.exceptions.NucleusException;
@@ -39,7 +40,8 @@ public class ConnectionFactoryImpl extends AbstractConnectionFactory
 {
     private Configuration config;
 
-    private HBaseConnectionPool connectionPool;
+    private static HBaseConnectionPool connectionPool;
+
 
     private int poolMinEvictableIdleTimeMillis = 0;
 
@@ -65,8 +67,9 @@ public class ConnectionFactoryImpl extends AbstractConnectionFactory
         {
             poolMinEvictableIdleTimeMillis = 30 * 1000; // default, 30 secs
         }
+         if(connectionPool==null)
+            connectionPool = new HBaseConnectionPool();
 
-        connectionPool = new HBaseConnectionPool();
         connectionPool.setTimeBetweenEvictionRunsMillis(poolTimeBetweenEvictionRunsMillis);
 
         String url = storeMgr.getConnectionURL();
@@ -97,8 +100,9 @@ public class ConnectionFactoryImpl extends AbstractConnectionFactory
             config.set("hbase.master", serverName + ":" + portName);
         }
 
-        int maxSize = storeMgr.getIntProperty("datanucleus.hbase.tablePoolMaxSize");
-        maxSize = maxSize > 0 ? maxSize : Integer.MAX_VALUE;
+      //  int maxSize = storeMgr.getIntProperty("datanucleus.hbase.tablePoolMaxSize");
+        //maxSize = maxSize > 0 ? maxSize : Integer.MAX_VALUE;
+
 
     }
 
