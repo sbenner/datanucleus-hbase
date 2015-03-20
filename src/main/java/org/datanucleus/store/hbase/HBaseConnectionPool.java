@@ -29,7 +29,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public class HBaseConnectionPool
 {
-    private static  List<HBaseManagedConnection> connections;
+    //private static  List<HBaseManagedConnection> connections;
 
     private final ThreadLocal<WeakReference<HBaseManagedConnection>> connectionForCurrentThread;
 
